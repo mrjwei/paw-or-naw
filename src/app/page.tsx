@@ -2,6 +2,7 @@ import { getDogsForFeed } from './actions'
 import { Feed } from '@/components/feed'
 import Link from 'next/link'
 import { MessageCircle, User } from 'lucide-react'
+import { SplashScreen } from '@/components/splash-screen'
 
 export default async function Home() {
   // Bypass auth check for demo
@@ -9,6 +10,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[#f2f2f7]">
+        <SplashScreen />
         <header className="glass sticky top-0 z-50 px-6 py-4 flex justify-between items-center shadow-sm backdrop-blur-xl bg-white/70 supports-[backdrop-filter]:bg-white/60">
             <Link href="/profile" className="text-gray-500 hover:text-black transition-colors p-2 rounded-full hover:bg-black/5">
                 <User size={24} />
