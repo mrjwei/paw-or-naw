@@ -8,7 +8,7 @@ export const MOCK_DOGS = [
     breed: 'Golden Retriever',
     age: 3,
     bio: 'Loves tennis balls and long walks on the beach. Looking for a playdate!',
-    photos: ['https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&w=800&q=80'],
+    photos: ['/scooby.jpg'],
     user_id: 'user-2'
   },
   {
@@ -26,7 +26,7 @@ export const MOCK_DOGS = [
     breed: 'Great Dane',
     age: 7,
     bio: 'Ruh-roh! Looking for snacks and solving mysteries.',
-    photos: ['/scooby.jpg'], 
+    photos: ['/scooby.jpg'],
     user_id: 'user-scooby'
   },
   {
