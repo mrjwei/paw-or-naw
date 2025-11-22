@@ -26,7 +26,7 @@ export const MOCK_DOGS = [
     breed: 'Great Dane',
     age: 7,
     bio: 'Ruh-roh! Looking for snacks and solving mysteries.',
-    photos: ['/doo1.jpg'], 
+    photos: ['/doo1.jpg'],
     user_id: 'user-scooby'
   },
   {
