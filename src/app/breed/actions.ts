@@ -1,11 +1,11 @@
 'use server'
 
-import OpenAI from 'openai'
+import Replicate from 'replicate'
 import fs from 'fs/promises'
 import path from 'path'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || 'mock-key',
+const replicate = new Replicate({
+  auth: process.env.REPLICATE_API_TOKEN,
 })
 
 async function getImageDataUrl(imagePath: string): Promise<string> {
@@ -27,14 +27,14 @@ async function getImageDataUrl(imagePath: string): Promise<string> {
   } catch (error) {
     console.error(`Error reading image file: ${fullPath}`, error)
     // Fallback to placeholder if local file fails (e.g. in some environments)
-    // or rethrow if strict. For now, let's log and return the path which might fail API validation but is safer than crashing.
     return imagePath
   }
 }
 
 export async function generateBabyDog(userDogImage: string, partnerDogImage: string) {
   try {
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.REPLICATE_API_TOKEN) {
+      console.warn('REPLICATE_API_TOKEN is missing!');
       // Simulate delay for mock
       await new Promise(resolve => setTimeout(resolve, 3000))
       return {
@@ -46,41 +46,48 @@ export async function generateBabyDog(userDogImage: string, partnerDogImage: str
     const userImageUrl = await getImageDataUrl(userDogImage)
     const partnerImageUrl = await getImageDataUrl(partnerDogImage)
 
-    // Step 1: Analyze the parents to get a description for the baby
-    const descriptionResponse = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages: [
-        {
-          role: "user",
-          content: [
-            { type: "text", text: "These are two dogs. Describe what a cute puppy would look like if these two dogs had a baby. Focus on visual traits like coat color, ear shape, and size. Keep the description concise and suitable for an image generation prompt. Ensure that the image generation prompt makes the output image very realistic and not cartoon/animated at all." },
-            {
-              type: "image_url",
-              image_url: {
-                "url": userImageUrl,
-              },
-            },
-            {
-              type: "image_url",
-              image_url: {
-                "url": partnerImageUrl,
-              },
-            },
-          ],
-        },
-      ],
-    });    const description = descriptionResponse.choices[0].message.content || "A cute mixed breed puppy";
+    // Revised prompt to emphasize biological blending rather than "combining" which can be interpreted as stitching.
+    const prompt = "A photo of a single puppy that is a biological offspring of the two input dogs. The puppy naturally blends the breed characteristics, fur texture, and facial features of both parents. It should look like a real living animal, not a photoshop. High quality, photorealistic, 4k.";
 
-    // Step 2: Generate the baby dog image
-    const imageResponse = await openai.images.generate({
-      model: "dall-e-3",
-      prompt: `A photo of a cute puppy: ${description}. High quality, realistic.`,
-      n: 1,
-      size: "1024x1024",
-    });
+    const input = {
+        prompt: prompt,
+        image_input: [userImageUrl, partnerImageUrl],
+        size: "2K", 
+        enhance_prompt: true, 
+        sequential_image_generation: "disabled",
+        max_images: 1,
+        aspect_ratio: "1:1" 
+    };
+    
+    console.log('Sending to Replicate bytedance/seedream-4 with refined prompt:', prompt);
 
-    const imageUrl = imageResponse.data?.[0]?.url;
-    if (!imageUrl) throw new Error("No image generated");
+    // @ts-ignore - types might not match exactly with the specific model output
+    const output = await replicate.run("bytedance/seedream-4", { input });
+
+    console.log('Replicate Output:', output);
+
+    let imageUrl: string;
+    // Handle various output formats from Replicate
+    if (output && typeof output === 'object' && 'url' in output && typeof (output as any).url === 'function') {
+        const urlVal = (output as any).url();
+        imageUrl = String(urlVal);
+    } else if (Array.isArray(output) && output.length > 0) {
+        // If it returns an array of output objects/URLs, take the first one
+        const firstItem = output[0];
+        if (typeof firstItem === 'string') {
+             imageUrl = firstItem;
+        } else if (firstItem && typeof firstItem === 'object' && 'url' in firstItem) {
+             const urlVal = typeof firstItem.url === 'function' ? firstItem.url() : firstItem.url;
+             imageUrl = String(urlVal);
+        } else {
+             imageUrl = String(firstItem);
+        }
+    } else if (typeof output === 'string') {
+        imageUrl = output;
+    } else {
+        console.error('Unexpected output format from Replicate:', output);
+        throw new Error('Unexpected output format from Replicate');
+    }
 
     return { success: true, imageUrl }
 

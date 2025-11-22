@@ -50,34 +50,34 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
         >
             <div className="h-[50%] relative transition-[height] duration-300">
                 <img src={dog.photos[currentPhotoIndex] || '/placeholder-dog.png'} alt={dog.name} className="w-full h-full object-cover pointer-events-none" />
-                
+
                 {/* Photo navigation areas with icons */}
                 {dog.photos.length > 1 && (
                     <>
                         {/* Left Navigation */}
-                        <button 
+                        <button
                             onClick={prevPhoto}
                             className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-1.5 transition-all pointer-events-auto z-10 shadow-md"
                         >
                             <ChevronLeft size={20} className="text-gray-800" />
                         </button>
-                        
+
                         {/* Right Navigation */}
-                        <button 
+                        <button
                             onClick={nextPhoto}
                             className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-1.5 transition-all pointer-events-auto z-10 shadow-md"
                         >
                             <ChevronRight size={20} className="text-gray-800" />
                         </button>
-                        
+
                         {/* Photo Indicators */}
                         <div className="absolute top-4 left-0 right-0 flex justify-center gap-1.5 pointer-events-none">
                             {dog.photos.map((_: any, index: number) => (
-                                <div 
+                                <div
                                     key={index}
                                     className={`h-1 rounded-full transition-all ${
-                                        index === currentPhotoIndex 
-                                            ? 'bg-white w-8' 
+                                        index === currentPhotoIndex
+                                            ? 'bg-white w-8'
                                             : 'bg-white/50 w-1'
                                     }`}
                                 />
@@ -85,7 +85,7 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
                         </div>
                     </>
                 )}
-                
+
                 <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 via-black/30 to-transparent p-6 pt-24 pointer-events-none">
                     <h2 className="text-3xl font-bold text-white tracking-tight drop-shadow-md">{dog.name}</h2>
                 </div>
@@ -112,7 +112,7 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
                 </div>
                 <p className="text-gray-700 line-clamp-4 text-sm leading-relaxed">{dog.bio}</p>
             </div>
-            
+
             {isScooby && (
                 <>
                      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-4 pointer-events-auto" onPointerDown={(e) => e.stopPropagation()}>
@@ -121,7 +121,7 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
                      <Script src="https://unpkg.com/@elevenlabs/convai-widget-embed" strategy="afterInteractive" />
                 </>
             )}
-            
+
             {/* Visual indicators for swipe */}
              <motion.div style={{ opacity: useTransform(x, [0, 100], [0, 1]) }} className="absolute top-10 left-10 border-4 border-green-500 text-green-500 font-bold text-4xl p-2 rounded transform -rotate-12 pointer-events-none">
                 PAW
@@ -132,4 +132,3 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
         </motion.div>
     )
 }
-
