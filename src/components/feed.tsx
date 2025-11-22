@@ -1,13 +1,33 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FeedCard } from './feed-card'
 import { swipe } from '@/app/actions'
 import { PawPrint, X } from 'lucide-react'
 import Link from 'next/link'
+import { useCurrentDog } from '@/lib/current-dog-context'
 
 export function Feed({ initialDogs }: { initialDogs: any[] }) {
     const [dogs, setDogs] = useState(initialDogs)
     const [matchAlert, setMatchAlert] = useState<any>(null)
+    const { setCurrentDogMatchId } = useCurrentDog()
+    
+    // Update current dog whenever the top dog changes
+    useEffect(() => {
+        if (dogs.length > 0) {
+            const currentDog = dogs[0]
+            // Map dog IDs to match IDs (based on mock data structure)
+            const dogIdToMatchId: Record<string, string> = {
+                'dog-1': 'match-1',
+                'dog-3': 'match-scooby',
+            }
+            
+            // Use the mapped match ID or fallback to creating one
+            const matchId = dogIdToMatchId[currentDog.id] || `match-${currentDog.id}`
+            setCurrentDogMatchId(matchId)
+        } else {
+            setCurrentDogMatchId(null)
+        }
+    }, [dogs, setCurrentDogMatchId])
 
     const removeTopCard = () => {
         setDogs((prev) => prev.slice(1))

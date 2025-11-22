@@ -16,9 +16,6 @@ export default async function Home() {
                 <User size={24} />
             </Link>
             <h1 className="text-xl font-semibold tracking-tight text-black">PawOrNaw</h1>
-            <Link href="/matches" className="text-gray-500 hover:text-black transition-colors p-2 rounded-full hover:bg-black/5">
-                <MessageCircle size={24} />
-            </Link>
         </header>
         <main className="flex-1 p-4 flex flex-col items-center pt-8 overflow-hidden">
             <Feed initialDogs={dogs} />
