@@ -38,7 +38,7 @@ export const MOCK_DOGS = [
   {
     id: 'dog-4',
     name: 'Daisy',
-    breed: 'Beagle',
+    breed: 'Pug',
     age: 1,
     size: 'Small',
     favoriteTreat: 'Bacon strips',
@@ -49,7 +49,7 @@ export const MOCK_DOGS = [
   {
     id: 'dog-5',
     name: 'Max',
-    breed: 'German Shepherd',
+    breed: 'Golden Retriever',
     age: 5,
     size: 'Large',
     favoriteTreat: 'Beef jerky',
