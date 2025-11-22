@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { FooterNav } from "@/components/footer-nav";
+import { CurrentDogProvider } from "@/lib/current-dog-context";
+import { SplashScreen } from "@/components/splash-screen";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +31,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <CurrentDogProvider>
+          <SplashScreen />
+          <div className="min-h-screen pb-20">
+            {children}
+          </div>
+          <FooterNav />
+        </CurrentDogProvider>
       </body>
     </html>
   );
