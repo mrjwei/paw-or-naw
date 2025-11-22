@@ -38,7 +38,7 @@ export const MOCK_DOGS = [
   {
     id: 'dog-4',
     name: 'Daisy',
-    breed: 'Pug',
+    breed: 'Beagle',
     age: 1,
     size: 'Small',
     favoriteTreat: 'Bacon strips',
@@ -49,7 +49,7 @@ export const MOCK_DOGS = [
   {
     id: 'dog-5',
     name: 'Max',
-    breed: 'Golden Retriever',
+    breed: 'German Shepherd',
     age: 5,
     size: 'Large',
     favoriteTreat: 'Beef jerky',
@@ -127,35 +127,5 @@ export const MOCK_MESSAGES = [
         sender_id: MOCK_USER_ID,
         content: 'Bork bork! (Hey there!)',
         created_at: new Date().toISOString()
-    }
-]
-
-export const MOCK_COMMENTS = [
-    {
-        id: 'comment-1',
-        from_dog: MOCK_DOGS[1], // Luna
-        message: 'Your profile looks pawsome! 🐾',
-        created_at: new Date(Date.now() - 3600000).toISOString() // 1 hour ago
-    },
-    {
-        id: 'comment-2',
-        from_dog: MOCK_DOGS[3], // Daisy
-        message: 'Would love to go on a walk together!',
-        created_at: new Date(Date.now() - 7200000).toISOString() // 2 hours ago
-    }
-]
-
-export const MOCK_LIKES = [
-    {
-        id: 'like-1',
-        dog: MOCK_DOGS[1] // Luna
-    },
-    {
-        id: 'like-2',
-        dog: MOCK_DOGS[3] // Daisy
-    },
-    {
-        id: 'like-3',
-        dog: MOCK_DOGS[4] // Max
     }
 ]
