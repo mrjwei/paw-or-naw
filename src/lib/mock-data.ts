@@ -25,6 +25,28 @@ export const MOCK_DOGS = [
     user_id: 'user-3'
   },
   {
+    id: 'dog-1',
+    name: 'Buddy',
+    breed: 'Golden Retriever',
+    age: 3,
+    size: 'Large',
+    favoriteTreat: 'Tennis ball-shaped cookies',
+    bio: 'Loves tennis balls and long walks on the beach. Looking for a playdate!',
+    photos: ['/golden1.avif', '/golden2.avif', '/golden3.avif'],
+    user_id: 'user-2'
+  },
+  {
+    id: 'dog-2',
+    name: 'Luna',
+    breed: 'Husky',
+    age: 2,
+    size: 'Large',
+    favoriteTreat: 'Frozen salmon bites',
+    bio: 'Very vocal and loves to run. Need someone who can keep up!',
+    photos: ['/husky1.avif', '/husky2.avif', '/husky3.avif'],
+    user_id: 'user-3'
+  },
+  {
     id: 'dog-3',
     name: 'Scooby Doo',
     breed: 'Great Dane',
