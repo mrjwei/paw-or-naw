@@ -129,3 +129,33 @@ export const MOCK_MESSAGES = [
         created_at: new Date().toISOString()
     }
 ]
+
+export const MOCK_COMMENTS = [
+    {
+        id: 'comment-1',
+        from_dog: MOCK_DOGS[1], // Luna
+        message: 'Your profile looks pawsome! 🐾',
+        created_at: new Date(Date.now() - 3600000).toISOString() // 1 hour ago
+    },
+    {
+        id: 'comment-2',
+        from_dog: MOCK_DOGS[3], // Daisy
+        message: 'Would love to go on a walk together!',
+        created_at: new Date(Date.now() - 7200000).toISOString() // 2 hours ago
+    }
+]
+
+export const MOCK_LIKES = [
+    {
+        id: 'like-1',
+        dog: MOCK_DOGS[1] // Luna
+    },
+    {
+        id: 'like-2',
+        dog: MOCK_DOGS[3] // Daisy
+    },
+    {
+        id: 'like-3',
+        dog: MOCK_DOGS[4] // Max
+    }
+]
