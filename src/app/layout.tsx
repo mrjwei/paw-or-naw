@@ -32,13 +32,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <CurrentDogProvider>
+          <SplashScreen />
           <div className="min-h-screen pb-20">
             {children}
           </div>
           <FooterNav />
         </CurrentDogProvider>
-        <SplashScreen />
-        {children}
       </body>
     </html>
   );
