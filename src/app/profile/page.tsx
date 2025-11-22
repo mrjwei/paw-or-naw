@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, Heart, Sparkles, Award, PawPrint, Coffee, Target, Lightbulb, Cake, Dog as DogIcon, Ruler, Cookie, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Heart, Sparkles, PawPrint, Target, Lightbulb, Cake, Dog as DogIcon, Ruler, Cookie, ChevronLeft, ChevronRight } from 'lucide-react'
 import { MOCK_MY_DOG } from '@/lib/mock-data'
 import { useState } from 'react'
 import { Dog, GalleryPhoto, GalleryVideo } from '@/lib/types'
@@ -35,9 +35,9 @@ export default function ProfilePage() {
                 <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
                     <div className="relative h-[500px]">
                         <img
-                            src={dog.gallery.photos[currentPhotoIndex].url}
+                            src={dog.gallery!.photos[currentPhotoIndex].url}
                             className="w-full h-full object-cover"
-                            alt={dog.gallery.photos[currentPhotoIndex].caption}
+                            alt={dog.gallery!.photos[currentPhotoIndex].caption}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
 
@@ -73,7 +73,7 @@ export default function ProfilePage() {
                         <div className="absolute bottom-0 left-0 right-0 p-6">
                             <h2 className="text-4xl font-bold text-white mb-1">{dog.name}</h2>
                             <p className="text-white/90 text-lg mb-2">{dog.personality}</p>
-                            <p className="text-white/80 text-sm italic">{dog.gallery.photos[currentPhotoIndex].caption}</p>
+                            <p className="text-white/80 text-sm italic">{dog.gallery!.photos[currentPhotoIndex].caption}</p>
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@ export default function ProfilePage() {
                         <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Hobbies</h3>
                     </div>
                     <div className="space-y-2">
-                        {dog.hobbies.map((hobby: string, index: number) => (
+                        {dog.hobbies!.map((hobby: string, index: number) => (
                             <div key={index} className="flex items-start gap-2 py-2 border-b border-gray-50 last:border-0">
                                 <span className="text-gray-700 text-sm leading-relaxed">{hobby}</span>
                             </div>
@@ -128,7 +128,7 @@ export default function ProfilePage() {
                         <Heart className="text-gray-400" size={18} strokeWidth={1.5} />
                         <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Looking For</h3>
                     </div>
-                    <p className="text-gray-700 leading-relaxed">{dog.lookingFor.join(' ')}</p>
+                    <p className="text-gray-700 leading-relaxed">{dog.lookingFor!.join(' ')}</p>
                 </div>
 
                 {/* Fun Fact Card */}
@@ -147,7 +147,7 @@ export default function ProfilePage() {
                         <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wide">Tags</h3>
                     </div>
                     <div className="flex flex-wrap gap-2">
-                        {dog.tags.map((tag: string, index: number) => (
+                        {dog.tags!.map((tag: string, index: number) => (
                             <span
                                 key={index}
                                 className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
@@ -163,7 +163,7 @@ export default function ProfilePage() {
                     <h2 className="text-2xl font-bold text-gray-900 mb-4 px-1">Daily Joys With Snoopy</h2>
 
                     <div className="space-y-4">
-                        {dog.gallery?.videos.map((video: GalleryVideo, index: number) => (
+                        {dog.gallery!.videos.map((video: GalleryVideo, index: number) => (
                             <div key={`video-${index}`} className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
                                 <div className="relative h-[400px]">
                                     <video
