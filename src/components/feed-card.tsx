@@ -2,6 +2,7 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { useState } from 'react'
 import Script from 'next/script'
+import { Cake, Dog, Ruler, Cookie, ChevronLeft, ChevronRight } from 'lucide-react'
 
 declare global {
     namespace JSX {
@@ -15,6 +16,7 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
     const x = useMotionValue(0)
     const rotate = useTransform(x, [-200, 200], [-30, 30])
     const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0])
+    const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
 
     const isScooby = dog.name === 'Scooby Doo'
 
@@ -27,6 +29,16 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
         }
     }
 
+    const nextPhoto = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        setCurrentPhotoIndex((prev) => (prev + 1) % dog.photos.length)
+    }
+
+    const prevPhoto = (e: React.MouseEvent) => {
+        e.stopPropagation()
+        setCurrentPhotoIndex((prev) => (prev - 1 + dog.photos.length) % dog.photos.length)
+    }
+
     return (
         <motion.div
             style={{ x, rotate, opacity }}
@@ -36,15 +48,69 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
             whileDrag={{ scale: 1.05, cursor: "grabbing" }}
             className="absolute top-0 left-0 w-full h-[500px] glass-card rounded-[32px] overflow-hidden cursor-grab touch-none ring-1 ring-black/5"
         >
-            <div className="h-[60%] relative pointer-events-none transition-[height] duration-300">
-                <img src={dog.photos[0] || '/placeholder-dog.png'} alt={dog.name} className="w-full h-full object-cover" />
-                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 via-black/30 to-transparent p-6 pt-24">
-                    <h2 className="text-3xl font-bold text-white tracking-tight drop-shadow-md">{dog.name}, {dog.age}</h2>
-                    <p className="text-white/90 text-lg font-medium drop-shadow-sm tracking-wide">{dog.breed}</p>
+            <div className="h-[50%] relative transition-[height] duration-300">
+                <img src={dog.photos[currentPhotoIndex] || '/placeholder-dog.png'} alt={dog.name} className="w-full h-full object-cover pointer-events-none" />
+                
+                {/* Photo navigation areas with icons */}
+                {dog.photos.length > 1 && (
+                    <>
+                        {/* Left Navigation */}
+                        <button 
+                            onClick={prevPhoto}
+                            className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-1.5 transition-all pointer-events-auto z-10 shadow-md"
+                        >
+                            <ChevronLeft size={20} className="text-gray-800" />
+                        </button>
+                        
+                        {/* Right Navigation */}
+                        <button 
+                            onClick={nextPhoto}
+                            className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/70 hover:bg-white rounded-full p-1.5 transition-all pointer-events-auto z-10 shadow-md"
+                        >
+                            <ChevronRight size={20} className="text-gray-800" />
+                        </button>
+                        
+                        {/* Photo Indicators */}
+                        <div className="absolute top-4 left-0 right-0 flex justify-center gap-1.5 pointer-events-none">
+                            {dog.photos.map((_: any, index: number) => (
+                                <div 
+                                    key={index}
+                                    className={`h-1 rounded-full transition-all ${
+                                        index === currentPhotoIndex 
+                                            ? 'bg-white w-8' 
+                                            : 'bg-white/50 w-1'
+                                    }`}
+                                />
+                            ))}
+                        </div>
+                    </>
+                )}
+                
+                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 via-black/30 to-transparent p-6 pt-24 pointer-events-none">
+                    <h2 className="text-3xl font-bold text-white tracking-tight drop-shadow-md">{dog.name}</h2>
                 </div>
             </div>
-            <div className={`px-6 py-4 h-[40%] transition-[height] duration-300 bg-white/50 backdrop-blur-sm pointer-events-none flex flex-col justify-center`}>
-                <p className="text-gray-600 line-clamp-3">{dog.bio}</p>
+            <div className={`px-6 py-4 h-[50%] transition-[height] duration-300 bg-white/50 backdrop-blur-sm pointer-events-none flex flex-col gap-3`}>
+                {/* Info Pills */}
+                <div className="flex flex-wrap gap-2">
+                    <div className="flex items-center gap-1.5 bg-white/80 rounded-full px-3 py-1.5 shadow-sm">
+                        <Cake size={14} className="text-gray-600" />
+                        <span className="text-gray-900 font-medium text-sm">{dog.age} years old</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 bg-white/80 rounded-full px-3 py-1.5 shadow-sm">
+                        <Dog size={14} className="text-gray-600" />
+                        <span className="text-gray-900 font-medium text-sm">{dog.breed}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 bg-white/80 rounded-full px-3 py-1.5 shadow-sm">
+                        <Ruler size={14} className="text-gray-600" />
+                        <span className="text-gray-900 font-medium text-sm">{dog.size}</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 bg-white/80 rounded-full px-3 py-1.5 shadow-sm">
+                        <Cookie size={14} className="text-gray-600" />
+                        <span className="text-gray-900 font-medium text-sm">{dog.favoriteTreat}</span>
+                    </div>
+                </div>
+                <p className="text-gray-700 line-clamp-4 text-sm leading-relaxed">{dog.bio}</p>
             </div>
             
             {isScooby && (

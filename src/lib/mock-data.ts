@@ -7,8 +7,10 @@ export const MOCK_DOGS = [
     name: 'Buddy',
     breed: 'Golden Retriever',
     age: 3,
+    size: 'Large',
+    favoriteTreat: 'Tennis ball-shaped cookies',
     bio: 'Loves tennis balls and long walks on the beach. Looking for a playdate!',
-    photos: ['/golden1.avif'],
+    photos: ['/golden1.avif', '/golden2.avif', '/golden3.avif'],
     user_id: 'user-2'
   },
   {
@@ -16,8 +18,10 @@ export const MOCK_DOGS = [
     name: 'Luna',
     breed: 'Husky',
     age: 2,
+    size: 'Large',
+    favoriteTreat: 'Frozen salmon bites',
     bio: 'Very vocal and loves to run. Need someone who can keep up!',
-    photos: ['/husky1.avif'],
+    photos: ['/husky1.avif', '/husky2.avif', '/husky3.avif'],
     user_id: 'user-3'
   },
   {
@@ -25,8 +29,10 @@ export const MOCK_DOGS = [
     name: 'Scooby Doo',
     breed: 'Great Dane',
     age: 7,
+    size: 'Extra Large',
+    favoriteTreat: 'Scooby Snacks',
     bio: 'Ruh-roh! Looking for snacks and solving mysteries.',
-    photos: ['/doo1.jpg'],
+    photos: ['/doo1.jpg', '/doo1.jpg', '/doo1.jpg'],
     user_id: 'user-scooby'
   },
   {
@@ -34,8 +40,10 @@ export const MOCK_DOGS = [
     name: 'Daisy',
     breed: 'Pug',
     age: 1,
+    size: 'Small',
+    favoriteTreat: 'Bacon strips',
     bio: 'Everything smells amazing! Let\'s go sniff some trees together.',
-    photos: ['/pug1.avif'],
+    photos: ['/pug1.avif', '/pug2.avif', '/pug3.avif'],
     user_id: 'user-5'
   },
   {
@@ -43,8 +51,10 @@ export const MOCK_DOGS = [
     name: 'Max',
     breed: 'Golden Retriever',
     age: 5,
+    size: 'Large',
+    favoriteTreat: 'Beef jerky',
     bio: 'Loyal and protective. Looking for a smart partner in crime.',
-    photos: ['/golden2.avif'],
+    photos: ['/golden4.avif', '/golden5.avif', '/golden6.avif'],
     user_id: 'user-6'
   }
 ]
@@ -55,8 +65,39 @@ export const MOCK_MY_DOG = {
     name: 'Snoopy',
     breed: 'Beagle',
     age: 8,
-    bio: 'Writer, pilot, and Joe Cool.',
-    photos: ['/snoopy1.webp']
+    size: 'Medium',
+    personality: 'World-class napper & philosopher',
+    bio: 'World-class napper, backyard explorer, and part-time philosopher. I love making new friends, sharing treats, and wagging my tail like there\'s no tomorrow. If you\'re looking for a happy, easygoing buddy who\'s always up for fun… you\'ve found him. 🐶',
+    photos: ['/snoopy1.webp'],
+    hobbies: [
+        'Chasing balls at top speed',
+        'Sniffing absolutely everything',
+        'Judging squirrels (politely)',
+        'Exploring new parks',
+        'Random zoomies',
+        'Dramatic naps in sunbeams'
+    ],
+    favoriteTreat: 'Peanut butter bones',
+    lookingFor: [
+        'Play buddies, chill hangout pals, and adventure partners who don\'t judge me for barking at leaves and shadows. Must appreciate good cuddles and snack breaks.'
+    ],
+    funFact: 'My tail wags at 200 wags per minute when I meet new friends. Side effects may include excessive joy.',
+    tags: ['napper', 'explorer', 'philosopher', 'friendly', 'easygoing', 'adventurous'],
+    gallery: {
+        photos: [
+            { url: '/snoopy/snoopy1.webp', caption: 'My weekend adventure face 😎' },
+            { url: '/snoopy/snoopy2.heic', caption: 'Guess who\'s the goodest boy? 👀' },
+            { url: '/snoopy/snoopy3.heic', caption: 'Catching sunshine, catching vibes ☀️' },
+            { url: '/snoopy/snoopy4.heic', caption: 'Outfit of the day? Always fabulous.' },
+            { url: '/snoopy/snoopy5.heic', caption: 'Smiles powered by treats and belly rubs 💛' },
+            { url: '/snoopy/snoopy6.webp', caption: 'Ready for zoomies in 3… 2… 1… 🚀' }
+        ],
+        videos: [
+            { url: '/snoopy/snoopyvid1.mp4', caption: 'Snoopy Speed: Zoomies Edition' },
+            { url: '/snoopy/snoopyvid2.mp4', caption: 'Warning: Tail wag overload 🐕💥' },
+            { url: '/snoopy/snoopyvid3.mp4', caption: 'Caught on camera: Maximum cuteness achieved' }
+        ]
+    }
 }
 
 export const MOCK_MATCHES = [
