@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-namespace */
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { Send } from 'lucide-react'
 import Script from 'next/script'
 
-declare global {
+declare module 'react' {
     namespace JSX {
         interface IntrinsicElements {
-            'elevenlabs-convai': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & { 'agent-id': string };
+            'elevenlabs-convai': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & { 'agent-id'?: string };
         }
     }
 }
@@ -25,8 +27,8 @@ export function Chat({ matchId, userId, initialMessages, isScooby }: { matchId: 
         if (!newMessage.trim()) return
 
         const content = newMessage
-        setNewMessage('') 
-        
+        setNewMessage('')
+
         const newMsg = {
             id: Date.now().toString(),
             match_id: matchId,
@@ -80,11 +82,11 @@ export function Chat({ matchId, userId, initialMessages, isScooby }: { matchId: 
                 <div ref={messagesEndRef} />
             </div>
             <form onSubmit={sendMessage} className="p-4 bg-white border-t flex gap-2 shrink-0">
-                <input 
-                    type="text" 
+                <input
+                    type="text"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="Type a message..." 
+                    placeholder="Type a message..."
                     className="flex-1 rounded-full border-gray-300 border px-4 py-2 focus:outline-none focus:border-indigo-500 text-black"
                 />
                 <button type="submit" className="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 cursor-pointer">
