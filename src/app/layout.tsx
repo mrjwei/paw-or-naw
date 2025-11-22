@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-<<<<<<< HEAD
 import Script from "next/script";
-=======
 import { FooterNav } from "@/components/footer-nav";
 import { CurrentDogProvider } from "@/lib/current-dog-context";
->>>>>>> c967326 (fix data)
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
