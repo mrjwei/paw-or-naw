@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { FooterNav } from "@/components/footer-nav";
 import { CurrentDogProvider } from "@/lib/current-dog-context";
+import { SplashScreen } from "@/components/splash-screen";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,8 @@ export default function RootLayout({
           </div>
           <FooterNav />
         </CurrentDogProvider>
+        <SplashScreen />
+        {children}
       </body>
     </html>
   );
