@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MOCK_MY_DOG } from '@/lib/mock-data'
@@ -19,7 +19,7 @@ const LOADING_MESSAGES = [
     "Optimizing for maximum boopability..."
 ]
 
-export default function BreedPage() {
+function BreedContent() {
     const searchParams = useSearchParams()
     const router = useRouter()
     const partnerImage = searchParams.get('partnerImage')
@@ -95,7 +95,7 @@ export default function BreedPage() {
                     </div>
 
                     <div className="flex flex-col items-center justify-center">
-                        <motion.div 
+                        <motion.div
                             animate={{ scale: [1, 1.2, 1] }}
                             transition={{ repeat: Infinity, duration: 1.5 }}
                         >
@@ -123,7 +123,7 @@ export default function BreedPage() {
                                     animate={{ rotate: 360 }}
                                     transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
                                 />
-                                
+
                                 {/* Middle reverse spinning ring */}
                                 <motion.div
                                     className="absolute inset-4 border-4 border-pink-100 rounded-full border-b-pink-400"
@@ -141,21 +141,21 @@ export default function BreedPage() {
                                 </motion.div>
 
                                 {/* Floating particles */}
-                                <motion.div 
+                                <motion.div
                                     className="absolute top-0 right-4 text-2xl"
                                     animate={{ y: [0, -20, 0], opacity: [0, 1, 0], rotate: [0, 10, -10, 0] }}
                                     transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
                                 >
                                     ✨
                                 </motion.div>
-                                <motion.div 
+                                <motion.div
                                     className="absolute bottom-4 left-4 text-2xl"
                                     animate={{ y: [0, 20, 0], opacity: [0, 1, 0], rotate: [0, -10, 10, 0] }}
                                     transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
                                 >
                                     ❤️
                                 </motion.div>
-                                <motion.div 
+                                <motion.div
                                     className="absolute top-4 left-4 text-2xl"
                                     animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
                                     transition={{ duration: 3, repeat: Infinity, delay: 0.2 }}
@@ -163,7 +163,7 @@ export default function BreedPage() {
                                     🐶
                                 </motion.div>
                             </div>
-                            
+
                             <div className="h-12 overflow-hidden relative w-full text-center px-4">
                                 <AnimatePresence mode="wait">
                                     <motion.p
@@ -200,5 +200,17 @@ export default function BreedPage() {
                 </div>
             </div>
         </div>
+    )
+}
+
+export default function BreedPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center p-4 bg-pink-50">
+                <div className="text-center text-pink-600">Loading...</div>
+            </div>
+        }>
+            <BreedContent />
+        </Suspense>
     )
 }
