@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+<<<<<<< HEAD
 import Script from "next/script";
+=======
+import { FooterNav } from "@/components/footer-nav";
+import { CurrentDogProvider } from "@/lib/current-dog-context";
+>>>>>>> c967326 (fix data)
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,8 +34,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
         <Script src="https://unpkg.com/@elevenlabs/convai-widget-embed" strategy="lazyOnload" />
+        <CurrentDogProvider>
+          <div className="min-h-screen pb-20">
+            {children}
+          </div>
+          <FooterNav />
+        </CurrentDogProvider>
       </body>
     </html>
   );
