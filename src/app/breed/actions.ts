@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server'
 
 import Replicate from 'replicate'
@@ -52,16 +53,15 @@ export async function generateBabyDog(userDogImage: string, partnerDogImage: str
     const input = {
         prompt: prompt,
         image_input: [userImageUrl, partnerImageUrl],
-        size: "2K", 
-        enhance_prompt: true, 
+        size: "2K",
+        enhance_prompt: true,
         sequential_image_generation: "disabled",
         max_images: 1,
-        aspect_ratio: "1:1" 
+        aspect_ratio: "1:1"
     };
-    
+
     console.log('Sending to Replicate bytedance/seedream-4 with refined prompt:', prompt);
 
-    // @ts-ignore - types might not match exactly with the specific model output
     const output = await replicate.run("bytedance/seedream-4", { input });
 
     console.log('Replicate Output:', output);
