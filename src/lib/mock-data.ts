@@ -7,8 +7,10 @@ export const MOCK_DOGS = [
     name: 'Buddy',
     breed: 'Golden Retriever',
     age: 3,
+    size: 'Large',
+    favoriteTreat: 'Tennis ball-shaped cookies',
     bio: 'Loves tennis balls and long walks on the beach. Looking for a playdate!',
-    photos: ['/golden1.avif'],
+    photos: ['/golden1.avif', '/golden2.avif', '/golden3.avif'],
     user_id: 'user-2'
   },
   {
@@ -16,8 +18,10 @@ export const MOCK_DOGS = [
     name: 'Luna',
     breed: 'Husky',
     age: 2,
+    size: 'Large',
+    favoriteTreat: 'Frozen salmon bites',
     bio: 'Very vocal and loves to run. Need someone who can keep up!',
-    photos: ['/husky1.avif'],
+    photos: ['/husky1.avif', '/husky2.avif', '/husky3.avif'],
     user_id: 'user-3'
   },
   {
@@ -25,8 +29,10 @@ export const MOCK_DOGS = [
     name: 'Scooby Doo',
     breed: 'Great Dane',
     age: 7,
+    size: 'Extra Large',
+    favoriteTreat: 'Scooby Snacks',
     bio: 'Ruh-roh! Looking for snacks and solving mysteries.',
-    photos: ['/doo1.jpg'],
+    photos: ['/doo1.jpg', '/doo1.jpg', '/doo1.jpg'],
     user_id: 'user-scooby'
   },
   {
@@ -34,8 +40,10 @@ export const MOCK_DOGS = [
     name: 'Daisy',
     breed: 'Pug',
     age: 1,
+    size: 'Small',
+    favoriteTreat: 'Bacon strips',
     bio: 'Everything smells amazing! Let\'s go sniff some trees together.',
-    photos: ['/pug1.avif'],
+    photos: ['/pug1.avif', '/pug2.avif', '/pug3.avif'],
     user_id: 'user-5'
   },
   {
@@ -43,8 +51,10 @@ export const MOCK_DOGS = [
     name: 'Max',
     breed: 'Golden Retriever',
     age: 5,
+    size: 'Large',
+    favoriteTreat: 'Beef jerky',
     bio: 'Loyal and protective. Looking for a smart partner in crime.',
-    photos: ['/golden2.avif'],
+    photos: ['/golden4.avif', '/golden5.avif', '/golden6.avif'],
     user_id: 'user-6'
   }
 ]
