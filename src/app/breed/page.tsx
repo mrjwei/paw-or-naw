@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MOCK_MY_DOG } from '@/lib/mock-data'
@@ -19,7 +19,7 @@ const LOADING_MESSAGES = [
     "Optimizing for maximum boopability..."
 ]
 
-function BreedContent() {
+export default function BreedPage() {
     const searchParams = useSearchParams()
     const router = useRouter()
     const partnerImage = searchParams.get('partnerImage')
@@ -28,6 +28,18 @@ function BreedContent() {
     const [isGenerating, setIsGenerating] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [loadingMessageIndex, setLoadingMessageIndex] = useState(0)
+    const [hearts, setHearts] = useState<{ id: number, left: string, scale: number, duration: number, delay: number, size: number }[]>([])
+
+    useEffect(() => {
+        setHearts(Array.from({ length: 20 }).map((_, i) => ({
+            id: i,
+            left: `${Math.random() * 100}%`,
+            scale: 0.5 + Math.random() * 1,
+            duration: 3 + Math.random() * 5,
+            delay: Math.random() * 2,
+            size: 20 + Math.random() * 30
+        })))
+    }, [])
 
     useEffect(() => {
         let interval: NodeJS.Timeout
@@ -74,15 +86,44 @@ function BreedContent() {
     }
 
     return (
-        <div className="min-h-screen bg-linear-to-b from-pink-50 to-white p-4 flex flex-col">
-            <header className="mb-8 flex items-center">
+        <div className="min-h-screen bg-linear-to-b from-pink-50 to-white p-4 flex flex-col relative overflow-hidden">
+            {isGenerating && (
+                <div className="absolute inset-0 pointer-events-none z-0">
+                    {hearts.map((heart) => (
+                        <motion.div
+                            key={heart.id}
+                            className="absolute text-pink-300/40"
+                            initial={{
+                                bottom: "-10%",
+                                left: heart.left,
+                                opacity: 0,
+                                scale: heart.scale
+                            }}
+                            animate={{
+                                bottom: "110%",
+                                opacity: [0, 0.8, 0],
+                            }}
+                            transition={{
+                                duration: heart.duration,
+                                repeat: Infinity,
+                                delay: heart.delay,
+                                ease: "linear"
+                            }}
+                        >
+                            <Heart fill="currentColor" size={heart.size} />
+                        </motion.div>
+                    ))}
+                </div>
+            )}
+
+            <header className="mb-8 flex items-center relative z-10">
                 <Link href="/" className="p-2 hover:bg-pink-100 rounded-full transition-colors">
                     <ArrowLeft className="w-6 h-6 text-pink-600" />
                 </Link>
                 <h1 className="ml-4 text-2xl font-bold text-pink-600">Breeding Lab</h1>
             </header>
 
-            <div className="flex-1 flex flex-col items-center justify-center max-w-md mx-auto w-full space-y-12">
+            <div className="flex-1 flex flex-col items-center justify-center max-w-md mx-auto w-full space-y-12 relative z-10">
 
                 {/* Parents Display */}
                 <div className="flex items-center justify-center gap-4 w-full">
@@ -95,7 +136,7 @@ function BreedContent() {
                     </div>
 
                     <div className="flex flex-col items-center justify-center">
-                        <motion.div
+                        <motion.div 
                             animate={{ scale: [1, 1.2, 1] }}
                             transition={{ repeat: Infinity, duration: 1.5 }}
                         >
@@ -123,7 +164,7 @@ function BreedContent() {
                                     animate={{ rotate: 360 }}
                                     transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
                                 />
-
+                                
                                 {/* Middle reverse spinning ring */}
                                 <motion.div
                                     className="absolute inset-4 border-4 border-pink-100 rounded-full border-b-pink-400"
@@ -141,21 +182,21 @@ function BreedContent() {
                                 </motion.div>
 
                                 {/* Floating particles */}
-                                <motion.div
+                                <motion.div 
                                     className="absolute top-0 right-4 text-2xl"
                                     animate={{ y: [0, -20, 0], opacity: [0, 1, 0], rotate: [0, 10, -10, 0] }}
                                     transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
                                 >
                                     ✨
                                 </motion.div>
-                                <motion.div
+                                <motion.div 
                                     className="absolute bottom-4 left-4 text-2xl"
                                     animate={{ y: [0, 20, 0], opacity: [0, 1, 0], rotate: [0, -10, 10, 0] }}
                                     transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
                                 >
                                     ❤️
                                 </motion.div>
-                                <motion.div
+                                <motion.div 
                                     className="absolute top-4 left-4 text-2xl"
                                     animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
                                     transition={{ duration: 3, repeat: Infinity, delay: 0.2 }}
@@ -163,7 +204,7 @@ function BreedContent() {
                                     🐶
                                 </motion.div>
                             </div>
-
+                            
                             <div className="h-12 overflow-hidden relative w-full text-center px-4">
                                 <AnimatePresence mode="wait">
                                     <motion.p
@@ -200,17 +241,5 @@ function BreedContent() {
                 </div>
             </div>
         </div>
-    )
-}
-
-export default function BreedPage() {
-    return (
-        <Suspense fallback={
-            <div className="min-h-screen flex items-center justify-center p-4 bg-pink-50">
-                <div className="text-center text-pink-600">Loading...</div>
-            </div>
-        }>
-            <BreedContent />
-        </Suspense>
     )
 }

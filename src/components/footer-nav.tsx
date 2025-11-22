@@ -26,10 +26,10 @@ function NavItem({ icon, label, isActive, onClick, badge }: NavItemProps) {
   };
 
   const colorMap = {
-    home: "text-[#FF6B6B]",
+    home: "text-[#EC4899]",
     heart: "text-[#EC4899]",
-    paw: "text-[#8B5CF6]",
-    profile: "text-[#10B981]",
+    paw: "text-[#EC4899]",
+    profile: "text-[#EC4899]",
   };
 
   const Icon = iconMap[icon];
@@ -38,27 +38,30 @@ function NavItem({ icon, label, isActive, onClick, badge }: NavItemProps) {
   return (
     <button
       onClick={onClick}
-      className="flex flex-col items-center justify-center relative tap-target group"
+      className="flex flex-col items-center justify-center relative tap-target group w-14 cursor-pointer"
       aria-label={label}
     >
-      <div className="relative transition-transform duration-100 ease-out group-active:scale-95">
+      <div className="relative transition-all duration-300 ease-out group-active:scale-90 group-hover:-translate-y-1">
         <Icon
-          className={`transition-colors duration-200 ${
-            isActive ? activeColor : "text-[#9CA3AF]"
+          className={`transition-colors duration-300 w-6 h-6 ${
+            isActive ? activeColor : "text-[#9CA3AF] group-hover:text-[#F472B6]"
           }`}
           filled={isActive}
         />
         {badge !== undefined && badge > 0 && (
-          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#EF4444] rounded-full" />
+          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#EC4899] rounded-full animate-bounce" />
         )}
       </div>
       <span
-        className={`text-[10px] font-medium mt-1 transition-colors duration-200 ${
-          isActive ? activeColor : "text-[#9CA3AF]"
+        className={`text-[10px] font-medium mt-1 transition-all duration-300 ${
+          isActive ? activeColor : "text-[#9CA3AF] group-hover:text-[#F472B6]"
         }`}
       >
         {label}
       </span>
+      {isActive && (
+        <div className="absolute -bottom-2 w-1 h-1 bg-[#EC4899] rounded-full" />
+      )}
     </button>
   );
 }
@@ -69,21 +72,22 @@ interface CenterButtonProps {
 
 function CenterButton({ onClick }: CenterButtonProps) {
   return (
-    <div className="flex flex-col items-center justify-start -mt-4">
+    <div className="flex flex-col items-center justify-start -mt-6 relative z-10">
       <button
         onClick={onClick}
-        className="center-button w-16 h-16 rounded-full bg-gradient-to-br from-[#FFB347] to-[#FF8C42] 
-                   shadow-[0_4px_12px_rgba(255,140,66,0.35)] 
+        className="center-button w-14 h-14 rounded-full bg-gradient-to-br from-[#EC4899] to-[#DB2777] 
+                   shadow-[0_4px_12px_rgba(236,72,153,0.35)] 
                    border-4 border-white 
                    flex items-center justify-center
-                   transition-all duration-150 ease-out
-                   active:scale-92 active:shadow-[0_2px_8px_rgba(255,140,66,0.4)]
-                   animate-float"
+                   transition-all duration-300 ease-out
+                   hover:scale-110 hover:shadow-[0_6px_16px_rgba(236,72,153,0.4)]
+                   active:scale-95 active:shadow-[0_2px_8px_rgba(236,72,153,0.4)]
+                   group cursor-pointer"
         aria-label="Message"
       >
-        <ChatIcon className="text-white" />
+        <ChatIcon className="text-white w-6 h-6 transition-transform duration-300 group-hover:rotate-12" />
       </button>
-      <span className="text-[11px] font-semibold text-[#FF8C42] mt-2">
+      <span className="text-[11px] font-semibold text-[#EC4899] mt-1 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
         Message
       </span>
     </div>

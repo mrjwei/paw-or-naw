@@ -12,13 +12,13 @@ export default async function MatchChatPage({ params }: { params: Promise<{ id: 
 
   return (
     <div className="flex flex-col h-screen bg-white">
-        <header className="p-4 border-b flex items-center gap-4 bg-white shrink-0">
-             <Link href="/matches" className="text-gray-600">
+        <header className="p-4 border-b border-pink-100 flex items-center gap-4 bg-white/80 backdrop-blur-md shrink-0 sticky top-0 z-10">
+             <Link href="/matches" className="text-pink-500 hover:text-pink-700 transition-colors p-2 -ml-2 hover:bg-pink-50 rounded-full">
                 <ArrowLeft />
             </Link>
             <div className="flex items-center gap-3">
-                <img src={otherDog.photos[0]} className="w-10 h-10 rounded-full object-cover" />
-                <h1 className="text-lg font-bold text-gray-900">{otherDog.name}</h1>
+                <img src={otherDog.photos[0]} className="w-10 h-10 rounded-full object-cover border border-pink-200" />
+                <h1 className="text-lg font-bold text-gray-800">{otherDog.name}</h1>
             </div>
         </header>
         

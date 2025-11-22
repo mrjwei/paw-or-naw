@@ -5,6 +5,14 @@ import { swipe } from '@/app/actions'
 import { PawPrint, X } from 'lucide-react'
 import Link from 'next/link'
 
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            'elevenlabs-convai': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & { 'agent-id': string };
+        }
+    }
+}
+
 export function Feed({ initialDogs }: { initialDogs: any[] }) {
     const [dogs, setDogs] = useState(initialDogs)
     const [matchAlert, setMatchAlert] = useState<any>(null)
@@ -61,9 +69,10 @@ export function Feed({ initialDogs }: { initialDogs: any[] }) {
     // Only render the top 2 cards to avoid visual clutter/stacking issues,
     // but reverse them so the first one in the array (index 0) is rendered LAST (on top) in the DOM.
     const visibleDogs = dogs.slice(0, 2).reverse();
+    const isScooby = dogs[0]?.name === 'Scooby Doo';
 
     return (
-        <div className="relative w-full max-w-sm mx-auto h-[500px] mt-4">
+        <div className="relative w-full max-w-sm mx-auto h-[45vh] max-h-[400px] mt-2">
             <div className="absolute inset-0 perspective-1000">
                 {visibleDogs.map((dog, index) => (
                     <FeedCard 
@@ -77,20 +86,25 @@ export function Feed({ initialDogs }: { initialDogs: any[] }) {
             </div>
             
             {/* Manual Buttons for accessibility / easier use */}
-            <div className="absolute -bottom-28 left-0 right-0 flex justify-center gap-8 z-0 items-center">
+            <div className="absolute -bottom-20 left-0 right-0 flex justify-center gap-6 z-0 items-center">
                 <button 
                     onClick={() => handleSwipe('naw')} 
-                    className="bg-white p-5 rounded-full shadow-xl text-pink-500 hover:bg-pink-50 transition-all hover:scale-110 active:scale-95 cursor-pointer ring-1 ring-pink-100"
+                    className="bg-white p-4 rounded-full shadow-xl text-pink-500 hover:bg-pink-50 transition-all hover:scale-110 active:scale-95 cursor-pointer ring-1 ring-pink-100"
                 >
-                    <X size={36} strokeWidth={3} />
+                    <X size={28} strokeWidth={3} />
                 </button>
                  <button 
                     onClick={() => handleSwipe('paw')} 
-                    className="bg-white p-5 rounded-full shadow-xl text-green-500 hover:bg-green-50 transition-all hover:scale-110 active:scale-95 cursor-pointer ring-1 ring-gray-100"
+                    className="bg-white p-4 rounded-full shadow-xl text-green-500 hover:bg-green-50 transition-all hover:scale-110 active:scale-95 cursor-pointer ring-1 ring-gray-100"
                 >
-                    <PawPrint size={36} strokeWidth={3} />
+                    <PawPrint size={28} strokeWidth={3} />
                 </button>
             </div>
+            {isScooby && (
+                 <div className="fixed bottom-[5.5rem] left-0 right-0 z-40 flex justify-center pb-2 pointer-events-auto" onPointerDown={(e) => e.stopPropagation()}>
+                    <elevenlabs-convai agent-id="agent_9801kam9pardfedb3kbhmbx7cb1n"></elevenlabs-convai>
+                </div>
+            )}
         </div>
     )
 }
