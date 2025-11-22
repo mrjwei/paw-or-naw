@@ -26,13 +26,13 @@ export function Feed({ initialDogs }: { initialDogs: any[] }) {
     if (matchAlert) {
         return (
              <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 p-4">
-                <div className="bg-white rounded-lg p-8 text-center max-w-md w-full">
-                    <h2 className="text-3xl font-bold text-indigo-600 mb-4">It's a Match!</h2>
+                <div className="bg-white rounded-2xl p-8 text-center max-w-md w-full">
+                    <h2 className="text-3xl font-bold text-pink-500 mb-4">It's a Match!</h2>
                     <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden">
                          <img src={matchAlert.photos[0]} className="object-cover w-full h-full" />
                     </div>
                     <p className="text-xl mb-6 text-gray-800">You and {matchAlert.name} liked each other!</p>
-                    <Link href="/matches" className="block w-full bg-indigo-600 text-white py-3 rounded-full font-bold mb-3">
+                    <Link href="/matches" className="block w-full bg-pink-500 hover:bg-pink-600 text-white py-3 rounded-full font-bold mb-3">
                         Send a Message
                     </Link>
                     <button onClick={() => setMatchAlert(null)} className="block w-full border border-gray-300 py-3 rounded-full font-bold text-gray-700">
@@ -51,7 +51,7 @@ export function Feed({ initialDogs }: { initialDogs: any[] }) {
                 </div>
                 <h2 className="text-xl font-bold text-gray-700">No more dogs nearby</h2>
                 <p className="text-gray-500 mt-2">Check back later for new pals!</p>
-                 <Link href="/matches" className="mt-6 text-indigo-600 font-semibold">
+                 <Link href="/matches" className="mt-6 text-pink-500 font-semibold">
                     View Matches
                 </Link>
             </div>
