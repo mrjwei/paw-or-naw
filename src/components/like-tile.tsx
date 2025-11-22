@@ -2,15 +2,10 @@
 
 import { useState } from 'react'
 import { Heart } from 'lucide-react'
+import { Dog } from '@/lib/types'
 
 interface LikeTileProps {
-  dog: {
-    id: string
-    name: string
-    breed: string
-    age: number
-    photos: string[]
-  }
+  dog: Dog
 }
 
 export function LikeTile({ dog }: LikeTileProps) {
@@ -24,18 +19,18 @@ export function LikeTile({ dog }: LikeTileProps) {
 
   return (
     <div className="relative rounded-lg overflow-hidden border border-gray-100 shadow-sm">
-      <img 
-        src={dog.photos[0]} 
+      <img
+        src={dog.photos[0]}
         alt={dog.name}
         className="w-full aspect-square object-cover"
       />
       <div className="p-3 bg-white">
         <h3 className="font-bold text-lg text-gray-900">{dog.name}</h3>
         <p className="text-gray-500 text-sm">{dog.breed}, {dog.age}</p>
-        <button 
+        <button
           className={`w-full mt-2 py-2 px-4 rounded-full transition-all flex items-center justify-center gap-2 ${
-            isLiked 
-              ? 'bg-pink-500 hover:bg-pink-600 text-white' 
+            isLiked
+              ? 'bg-pink-500 hover:bg-pink-600 text-white'
               : 'bg-pink-50 hover:bg-pink-100 text-pink-500'
           }`}
           onClick={handleLikeBack}

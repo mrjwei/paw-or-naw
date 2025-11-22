@@ -1,9 +1,10 @@
 import { MOCK_MATCHES } from '@/lib/mock-data'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import { Match } from '@/lib/types'
 
 export default async function MatchesPage() {
-  const matches = MOCK_MATCHES
+  const matches = MOCK_MATCHES as unknown as Match[]
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -14,7 +15,7 @@ export default async function MatchesPage() {
             <h1 className="text-xl font-bold text-pink-600">Matches</h1>
         </header>
         <div className="p-4 space-y-4">
-            {matches.map((match: any) => {
+            {matches.map((match: Match) => {
                 const otherDog = match.dog_b // In mock data, we are always dog_a for simplicity here or logic holds
                 return (
                     <Link key={match.id} href={`/matches/${match.id}`} className="flex items-center gap-4 p-3 hover:bg-pink-50/50 rounded-xl border border-pink-100 shadow-sm transition-colors group">

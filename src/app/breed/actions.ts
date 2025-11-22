@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use server'
 
 import Replicate from 'replicate'
@@ -68,9 +67,15 @@ export async function generateBabyDog(userDogImage: string, partnerDogImage: str
 
     let imageUrl: string;
     // Handle various output formats from Replicate
-    if (output && typeof output === 'object' && 'url' in output && typeof (output as any).url === 'function') {
-        const urlVal = (output as any).url();
-        imageUrl = String(urlVal);
+    if (output && typeof output === 'object' && 'url' in output) {
+        const outputWithUrl = output as { url: unknown };
+        if (typeof outputWithUrl.url === 'function') {
+             const urlVal = outputWithUrl.url();
+             imageUrl = String(urlVal);
+        } else {
+             // Fallback if url is not a function but maybe a string property?
+             imageUrl = String(outputWithUrl.url);
+        }
     } else if (Array.isArray(output) && output.length > 0) {
         // If it returns an array of output objects/URLs, take the first one
         const firstItem = output[0];

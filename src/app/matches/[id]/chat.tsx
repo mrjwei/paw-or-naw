@@ -4,6 +4,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Send } from 'lucide-react'
 import Script from 'next/script'
+import { Message } from '@/lib/types'
 
 declare module 'react' {
     namespace JSX {
@@ -13,8 +14,8 @@ declare module 'react' {
     }
 }
 
-export function Chat({ matchId, userId, initialMessages, isScooby }: { matchId: string, userId: string, initialMessages: any[], isScooby: boolean }) {
-    const [messages, setMessages] = useState(initialMessages)
+export function Chat({ matchId, userId, initialMessages, isScooby }: { matchId: string, userId: string, initialMessages: Message[], isScooby: boolean }) {
+    const [messages, setMessages] = useState<Message[]>(initialMessages)
     const [newMessage, setNewMessage] = useState('')
     const messagesEndRef = useRef<HTMLDivElement>(null)
 

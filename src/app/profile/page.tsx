@@ -1,22 +1,25 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowLeft, Heart, Sparkles, Award, PawPrint, Coffee, Target, Lightbulb, Cake, Dog, Ruler, Cookie, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Heart, Sparkles, Award, PawPrint, Coffee, Target, Lightbulb, Cake, Dog as DogIcon, Ruler, Cookie, ChevronLeft, ChevronRight } from 'lucide-react'
 import { MOCK_MY_DOG } from '@/lib/mock-data'
 import { useState } from 'react'
+import { Dog, GalleryPhoto, GalleryVideo } from '@/lib/types'
 
 export default function ProfilePage() {
-    const dog = MOCK_MY_DOG
+    const dog = MOCK_MY_DOG as unknown as Dog
     const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
-    
+
     const nextPhoto = () => {
-        setCurrentPhotoIndex((prev) => (prev + 1) % dog.gallery.photos.length)
+        if (!dog.gallery) return
+        setCurrentPhotoIndex((prev) => (prev + 1) % dog.gallery!.photos.length)
     }
-    
+
     const prevPhoto = () => {
-        setCurrentPhotoIndex((prev) => (prev - 1 + dog.gallery.photos.length) % dog.gallery.photos.length)
+        if (!dog.gallery) return
+        setCurrentPhotoIndex((prev) => (prev - 1 + dog.gallery!.photos.length) % dog.gallery!.photos.length)
     }
-    
+
     return (
         <div className="min-h-screen bg-gray-50 pb-8">
             {/* Header */}
@@ -31,41 +34,41 @@ export default function ProfilePage() {
                 {/* Photo Slideshow Card */}
                 <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
                     <div className="relative h-[500px]">
-                        <img 
-                            src={dog.gallery.photos[currentPhotoIndex].url} 
-                            className="w-full h-full object-cover" 
-                            alt={dog.gallery.photos[currentPhotoIndex].caption} 
+                        <img
+                            src={dog.gallery.photos[currentPhotoIndex].url}
+                            className="w-full h-full object-cover"
+                            alt={dog.gallery.photos[currentPhotoIndex].caption}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
-                        
+
                         {/* Navigation Arrows */}
-                        <button 
+                        <button
                             onClick={prevPhoto}
                             className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 transition-colors"
                         >
                             <ChevronLeft size={24} className="text-gray-900" />
                         </button>
-                        <button 
+                        <button
                             onClick={nextPhoto}
                             className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full p-2 transition-colors"
                         >
                             <ChevronRight size={24} className="text-gray-900" />
                         </button>
-                        
+
                         {/* Photo Indicators */}
                         <div className="absolute top-4 left-0 right-0 flex justify-center gap-1.5">
-                            {dog.gallery.photos.map((_: any, index: number) => (
-                                <div 
+                            {dog.gallery?.photos.map((_: GalleryPhoto, index: number) => (
+                                <div
                                     key={index}
                                     className={`h-1 rounded-full transition-all ${
-                                        index === currentPhotoIndex 
-                                            ? 'bg-white w-8' 
+                                        index === currentPhotoIndex
+                                            ? 'bg-white w-8'
                                             : 'bg-white/50 w-1'
                                     }`}
                                 />
                             ))}
                         </div>
-                        
+
                         {/* Name and Caption overlay */}
                         <div className="absolute bottom-0 left-0 right-0 p-6">
                             <h2 className="text-4xl font-bold text-white mb-1">{dog.name}</h2>
@@ -82,7 +85,7 @@ export default function ProfilePage() {
                         <span className="text-gray-900 font-medium">{dog.age} years old</span>
                     </div>
                     <div className="flex items-center gap-2 bg-gray-50 rounded-full px-4 py-2">
-                        <Dog size={16} className="text-gray-600" />
+                        <DogIcon size={16} className="text-gray-600" />
                         <span className="text-gray-900 font-medium">{dog.breed}</span>
                     </div>
                     <div className="flex items-center gap-2 bg-gray-50 rounded-full px-4 py-2">
@@ -145,8 +148,8 @@ export default function ProfilePage() {
                     </div>
                     <div className="flex flex-wrap gap-2">
                         {dog.tags.map((tag: string, index: number) => (
-                            <span 
-                                key={index} 
+                            <span
+                                key={index}
                                 className="px-3 py-1.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium"
                             >
                                 {tag}
@@ -158,12 +161,12 @@ export default function ProfilePage() {
                 {/* Video Gallery Section */}
                 <div className="mt-8 mb-6">
                     <h2 className="text-2xl font-bold text-gray-900 mb-4 px-1">Daily Joys With Snoopy</h2>
-                    
+
                     <div className="space-y-4">
-                        {dog.gallery.videos.map((video: { url: string; caption: string }, index: number) => (
+                        {dog.gallery?.videos.map((video: GalleryVideo, index: number) => (
                             <div key={`video-${index}`} className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
                                 <div className="relative h-[400px]">
-                                    <video 
+                                    <video
                                         src={video.url}
                                         className="w-full h-full object-cover"
                                         autoPlay

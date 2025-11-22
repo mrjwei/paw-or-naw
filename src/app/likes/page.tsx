@@ -2,10 +2,11 @@ import { MOCK_COMMENTS, MOCK_LIKES } from '@/lib/mock-data'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { LikeTile } from '@/components/like-tile'
+import { Comment, Like } from '@/lib/types'
 
 export default async function LikesPage() {
-  const comments = MOCK_COMMENTS
-  const likes = MOCK_LIKES
+  const comments = MOCK_COMMENTS as unknown as Comment[]
+  const likes = MOCK_LIKES as unknown as Like[]
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -21,14 +22,14 @@ export default async function LikesPage() {
         <section>
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Comments</h2>
           <div className="space-y-3">
-            {comments.map((comment: any) => (
-              <div 
-                key={comment.id} 
+            {comments.map((comment: Comment) => (
+              <div
+                key={comment.id}
                 className="flex items-start gap-4 p-4 hover:bg-gray-50 rounded-lg border border-gray-100 shadow-sm"
               >
-                <img 
-                  src={comment.from_dog.photos[0]} 
-                  className="w-12 h-12 rounded-full object-cover flex-shrink-0" 
+                <img
+                  src={comment.from_dog.photos[0]}
+                  className="w-12 h-12 rounded-full object-cover flex-shrink-0"
                   alt={comment.from_dog.name}
                 />
                 <div className="flex-1">
@@ -49,7 +50,7 @@ export default async function LikesPage() {
             Likes You <span className="text-pink-500">({likes.length})</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {likes.map((like: any) => (
+            {likes.map((like: Like) => (
               <LikeTile key={like.id} dog={like.dog} />
             ))}
           </div>

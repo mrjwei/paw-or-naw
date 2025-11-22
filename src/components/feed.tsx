@@ -5,9 +5,11 @@ import { swipe } from '@/app/actions'
 import { PawPrint, X } from 'lucide-react'
 import Link from 'next/link'
 
-export function Feed({ initialDogs }: { initialDogs: any[] }) {
-    const [dogs, setDogs] = useState(initialDogs)
-    const [matchAlert, setMatchAlert] = useState<any>(null)
+import { Dog } from '@/lib/types'
+
+export function Feed({ initialDogs }: { initialDogs: Dog[] }) {
+    const [dogs, setDogs] = useState<Dog[]>(initialDogs)
+    const [matchAlert, setMatchAlert] = useState<Dog | null>(null)
 
     const removeTopCard = () => {
         setDogs((prev) => prev.slice(1))
@@ -27,9 +29,10 @@ export function Feed({ initialDogs }: { initialDogs: any[] }) {
         return (
              <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 p-4">
                 <div className="bg-white rounded-lg p-8 text-center max-w-md w-full">
-                    <h2 className="text-3xl font-bold text-pink-600 mb-4">It's a Match!</h2>
+                    <h2 className="text-3xl font-bold text-pink-600 mb-4">It&apos;s a Match!</h2>
                     <div className="relative w-full h-64 mb-4 rounded-lg overflow-hidden">
-                         <img src={matchAlert.photos[0]} className="object-cover w-full h-full" />
+                         {/* eslint-disable-next-line @next/next/no-img-element */}
+                         <img src={matchAlert.photos[0]} className="object-cover w-full h-full" alt={matchAlert.name || 'Matched Dog'} />
                     </div>
                     <p className="text-xl mb-6 text-gray-800">You and {matchAlert.name} liked each other!</p>
                     <Link href="/matches" className="block w-full bg-pink-600 text-white py-3 rounded-full font-bold mb-3 hover:bg-pink-700 transition-colors">
@@ -66,26 +69,26 @@ export function Feed({ initialDogs }: { initialDogs: any[] }) {
         <div className="relative w-full max-w-sm mx-auto h-[500px] mt-4">
             <div className="absolute inset-0 perspective-1000">
                 {visibleDogs.map((dog, index) => (
-                    <FeedCard 
+                    <FeedCard
                         key={dog.id}
-                        dog={dog} 
-                        onSwipe={handleSwipe} 
+                        dog={dog}
+                        onSwipe={handleSwipe}
                         // Only the top card (last in DOM) should be draggable
                         isTopCard={index === visibleDogs.length - 1}
                     />
-                ))} 
+                ))}
             </div>
-            
+
             {/* Manual Buttons for accessibility / easier use */}
             <div className="absolute -bottom-28 left-0 right-0 flex justify-center gap-8 z-0 items-center">
-                <button 
-                    onClick={() => handleSwipe('naw')} 
+                <button
+                    onClick={() => handleSwipe('naw')}
                     className="bg-white p-5 rounded-full shadow-xl text-pink-500 hover:bg-pink-50 transition-all hover:scale-110 active:scale-95 cursor-pointer ring-1 ring-pink-100"
                 >
                     <X size={36} strokeWidth={3} />
                 </button>
-                 <button 
-                    onClick={() => handleSwipe('paw')} 
+                 <button
+                    onClick={() => handleSwipe('paw')}
                     className="bg-white p-5 rounded-full shadow-xl text-green-500 hover:bg-green-50 transition-all hover:scale-110 active:scale-95 cursor-pointer ring-1 ring-gray-100"
                 >
                     <PawPrint size={36} strokeWidth={3} />

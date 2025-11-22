@@ -1,9 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
-import { motion, useMotionValue, useTransform } from 'framer-motion'
+import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion'
 import { useState } from 'react'
 import Script from 'next/script'
-import { Cake, Dog, Ruler, Cookie, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Cake, Dog as DogIcon, Ruler, Cookie, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Dog } from '@/lib/types'
 
 declare module 'react' {
     interface IntrinsicElements {
@@ -11,7 +11,13 @@ declare module 'react' {
     }
 }
 
-export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'naw') => void }) {
+interface FeedCardProps {
+    dog: Dog
+    onSwipe: (dir: 'paw' | 'naw') => void
+    isTopCard: boolean
+}
+
+export function FeedCard({ dog, onSwipe, isTopCard }: FeedCardProps) {
     const x = useMotionValue(0)
     const rotate = useTransform(x, [-200, 200], [-30, 30])
     const opacity = useTransform(x, [-200, -100, 0, 100, 200], [0, 1, 1, 1, 0])
@@ -19,7 +25,7 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
 
     const isScooby = dog.name === 'Scooby Doo'
 
-    const handleDragEnd = (e: any, info: any) => {
+    const handleDragEnd = (e: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
         // Disable swipe if interacting with widget? No, maybe just let them swipe.
         if (info.offset.x > 100) {
             onSwipe('paw')
@@ -41,7 +47,7 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
     return (
         <motion.div
             style={{ x, rotate, opacity }}
-            drag="x"
+            drag={isTopCard ? "x" : false}
             dragConstraints={{ left: 0, right: 0 }}
             onDragEnd={handleDragEnd}
             whileDrag={{ scale: 1.05, cursor: "grabbing" }}
@@ -71,7 +77,7 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
 
                         {/* Photo Indicators */}
                         <div className="absolute top-4 left-0 right-0 flex justify-center gap-1.5 pointer-events-none">
-                            {dog.photos.map((_: any, index: number) => (
+                            {dog.photos.map((_: string, index: number) => (
                                 <div
                                     key={index}
                                     className={`h-1 rounded-full transition-all ${
@@ -97,7 +103,7 @@ export function FeedCard({ dog, onSwipe }: { dog: any, onSwipe: (dir: 'paw' | 'n
                         <span className="text-gray-900 font-medium text-sm">{dog.age} years old</span>
                     </div>
                     <div className="flex items-center gap-1.5 bg-white/80 rounded-full px-3 py-1.5 shadow-sm">
-                        <Dog size={14} className="text-gray-600" />
+                        <DogIcon size={14} className="text-gray-600" />
                         <span className="text-gray-900 font-medium text-sm">{dog.breed}</span>
                     </div>
                     <div className="flex items-center gap-1.5 bg-white/80 rounded-full px-3 py-1.5 shadow-sm">

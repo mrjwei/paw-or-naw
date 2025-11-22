@@ -1,8 +1,9 @@
 import { MOCK_MATCHES } from '@/lib/mock-data'
 import Link from 'next/link'
+import { Match } from '@/lib/types'
 
 export default async function ChatPage() {
-  const matches = MOCK_MATCHES
+  const matches = MOCK_MATCHES as unknown as Match[]
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
@@ -10,7 +11,7 @@ export default async function ChatPage() {
             <h1 className="text-xl font-bold text-gray-900">Messages</h1>
         </header>
         <div className="p-4 space-y-4">
-            {matches.map((match: any) => {
+            {matches.map((match: Match) => {
                 const otherDog = match.dog_b
                 return (
                     <Link key={match.id} href={`/matches/${match.id}`} className="flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg border border-gray-100 shadow-sm">
