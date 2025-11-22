@@ -4,8 +4,9 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Download, Share2 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { Suspense } from 'react'
 
-export default function BreedResultPage() {
+function BreedResultContent() {
     const searchParams = useSearchParams()
     const imageUrl = searchParams.get('image')
 
@@ -50,7 +51,9 @@ export default function BreedResultPage() {
                         <h2 className="text-white text-2xl font-bold">Your Future Puppy</h2>
                         <p className="text-white/90">Isn&apos;t it adorable?</p>
                     </motion.div>
-                </motion.div>                <div className="flex gap-4 w-full">
+                </motion.div>
+
+                <div className="flex gap-4 w-full">
                     <button className="flex-1 py-3 bg-white border border-gray-200 text-gray-700 rounded-xl font-semibold shadow-sm hover:bg-gray-50 flex items-center justify-center gap-2">
                         <Share2 className="w-5 h-5" />
                         Share
@@ -69,5 +72,17 @@ export default function BreedResultPage() {
                 </Link>
             </div>
         </div>
+    )
+}
+
+export default function BreedResultPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center p-4">
+                <div className="text-center">Loading...</div>
+            </div>
+        }>
+            <BreedResultContent />
+        </Suspense>
     )
 }
