@@ -83,10 +83,10 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
-/* Tap target - ensures minimum touch area */
+/* Tap target - ensures minimum touch area (increased for 28px icons) */
 .tap-target {
-  min-width: 44px;
-  min-height: 44px;
+  min-width: 48px;
+  min-height: 48px;
   position: relative;
 }
 
@@ -145,4 +145,33 @@ body {
 
 .footer-nav .badge {
   animation: pulse-badge 2s ease-in-out infinite;
+}
+
+/* Landing Page Styles */
+.landing-page {
+  background: linear-gradient(180deg, #ffffff 0%, #fff5f7 100%);
+}
+
+.swipe-card-preview {
+  animation: gentle-float 3s ease-in-out infinite;
+}
+
+@keyframes gentle-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(-1deg);
+  }
+}
+
+/* Active scale for buttons */
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+/* Footer preview styling */
+.footer-preview {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }

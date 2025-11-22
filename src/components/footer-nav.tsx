@@ -6,6 +6,7 @@ import { HeartIcon } from "./icons/heart-icon";
 import { ChatIcon } from "./icons/chat-icon";
 import { PawIcon } from "./icons/paw-icon";
 import { ProfileIcon } from "./icons/profile-icon";
+import { useCurrentDog } from "@/lib/current-dog-context";
 
 interface NavItemProps {
   icon: "home" | "heart" | "paw" | "profile";
@@ -78,12 +79,12 @@ function CenterButton({ onClick }: CenterButtonProps) {
                    transition-all duration-150 ease-out
                    active:scale-92 active:shadow-[0_2px_8px_rgba(255,140,66,0.4)]
                    animate-float"
-        aria-label="Talk"
+        aria-label="Message"
       >
         <ChatIcon className="text-white" />
       </button>
       <span className="text-[11px] font-semibold text-[#FF8C42] mt-2">
-        Talk
+        Message
       </span>
     </div>
   );
@@ -92,6 +93,7 @@ function CenterButton({ onClick }: CenterButtonProps) {
 export function FooterNav() {
   const pathname = usePathname();
   const router = useRouter();
+  const { currentDogMatchId } = useCurrentDog();
 
   const navItems: Array<{
     icon: "home" | "heart" | "paw" | "profile";
@@ -109,6 +111,16 @@ export function FooterNav() {
     router.push(href);
   };
 
+  const handleMessageClick = () => {
+    if (currentDogMatchId) {
+      // Navigate to direct chat with the current dog
+      router.push(`/matches/${currentDogMatchId}`);
+    } else {
+      // Fallback to general chat/messages page
+      router.push("/chat");
+    }
+  };
+
   return (
     <footer className="footer-nav fixed bottom-0 left-0 right-0 h-20 bg-white border-t border-[#F0F0F0] shadow-[0_-2px_8px_rgba(0,0,0,0.04)] rounded-t-[20px] pb-safe z-50">
       <nav className="h-full px-4 flex items-center justify-around">
@@ -122,7 +134,7 @@ export function FooterNav() {
           isActive={pathname === navItems[1].href}
           onClick={() => handleNavigation(navItems[1].href)}
         />
-        <CenterButton onClick={() => handleNavigation("/matches")} />
+        <CenterButton onClick={handleMessageClick} />
         <NavItem
           {...navItems[2]}
           isActive={pathname === navItems[2].href}
